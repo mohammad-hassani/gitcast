@@ -15,7 +15,9 @@ Open [http://localhost:3000](http://localhost:3000).
 
 The `Deploy GitHub Pages` workflow builds and publishes the static site when changes are pushed to `main` or when you push a Git tag named `episode` or starting with `episode` (for example, `episode3`). It uses the `/gitcast` project-site path and publishes to [https://mohammad-hassani.github.io/gitcast/](https://mohammad-hassani.github.io/gitcast/).
 
-In the GitHub repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. After pushing a tagged episode, check the **Actions** tab for the deployment status. Use a unique tag for each episode (for example, `episode3`); Git tag names are unique, so the same `episode` tag cannot be reused for every release. Create and push a tag with:
+In the GitHub repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. The `github-pages` environment must also allow the deployment refs: open **Settings → Environments → github-pages → Deployment branches and tags**, choose **Selected branches and tags**, and add the `main` branch plus the `episode*` tag pattern. Otherwise GitHub will reject tag deployments before the deploy job starts.
+
+After pushing a tagged episode, check the **Actions** tab for the deployment status. Use a unique tag for each episode (for example, `episode3`); Git tag names are unique, so the same `episode` tag cannot be reused for every release. Create and push a tag with:
 
 ```bash
 git tag episode3
@@ -23,6 +25,7 @@ git push origin episode3
 ```
 
 The workflow can also be started manually with **Actions → Deploy GitHub Pages → Run workflow**.
+If a deployment was rejected by the environment policy, update the allowed branch/tag patterns and rerun that failed workflow from the **Actions** tab.
 
 ## Add a new episode
 
