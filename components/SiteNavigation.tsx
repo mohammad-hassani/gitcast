@@ -5,6 +5,7 @@ import { useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useLocale, useTranslation } from "@/components/LocaleProvider";
 import { getNextLocale, translations } from "@/content/i18n/translations";
+import { sitePath } from "@/lib/site-path";
 
 export function SiteNavigation({ title }: { title: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,7 @@ export function SiteNavigation({ title }: { title: string }) {
         <nav className={`site-nav ${isOpen ? "is-open" : ""}`} aria-label={t("navigation.main")}>
           <Link href="/#episodes" onClick={closeMenu}>{t("navigation.episodes")}</Link>
           <Link href="/about" onClick={closeMenu}>{t("navigation.about")}</Link>
-          <a href="/feed.xml" onClick={closeMenu}>{t("navigation.feed")}</a>
+          <a href={sitePath("/feed.xml")} onClick={closeMenu}>{t("navigation.feed")}</a>
           <Link href="/#episodes" onClick={closeMenu} className="nav-listen">
             {t("navigation.explore")}
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="size-4">
@@ -55,7 +56,7 @@ export function SiteNavigation({ title }: { title: string }) {
       <nav id="site-navigation" className={`mobile-nav ${isOpen ? "is-open" : ""}`} aria-label={t("navigation.mobile")} inert={!isOpen}>
         <Link href="/#episodes" onClick={closeMenu}>{t("navigation.episodes")}</Link>
         <Link href="/about" onClick={closeMenu}>{t("navigation.about")}</Link>
-        <a href="/feed.xml" onClick={closeMenu}>{t("navigation.feed")}</a>
+        <a href={sitePath("/feed.xml")} onClick={closeMenu}>{t("navigation.feed")}</a>
         <button type="button" className="locale-toggle" onClick={switchLocale} aria-label={t("navigation.switchLanguage", { language: translations[nextLocale].nativeName })}>
           {translations[nextLocale].nativeName}
         </button>

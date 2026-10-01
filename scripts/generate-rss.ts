@@ -20,12 +20,13 @@ function escapeXml(value: string) {
 
 const items = episodes
   .map((episode) => {
+    const episodeUrl = `${podcast.websiteUrl}/episodes/${episode.slug}/`;
     return `
       <item>
         <title>${escapeXml(episode.title)}</title>
         <description>${escapeXml(episode.description)}</description>
-        <link>${escapeXml(`${podcast.websiteUrl}/episodes/${episode.slug}`)}</link>
-        <guid isPermaLink="true">${escapeXml(`${podcast.websiteUrl}/episodes/${episode.slug}`)}</guid>
+        <link>${escapeXml(episodeUrl)}</link>
+        <guid isPermaLink="true">${escapeXml(episodeUrl)}</guid>
         <pubDate>${new Date(episode.date).toUTCString()}</pubDate>
         <enclosure url="${escapeXml(episode.audio)}" type="audio/mpeg" length="0" />
         <itunes:duration>${episode.duration}</itunes:duration>

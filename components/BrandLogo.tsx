@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { sitePath } from "@/lib/site-path";
 
 export function BrandName() {
   return (
@@ -14,14 +15,14 @@ export function BrandLogo({ title }: { title: string }) {
       <Image
         aria-hidden="true"
         className="brand-symbol"
-        src="/logo/logo.svg"
+        src={sitePath("/logo/logo.svg")}
         alt=""
         width={502}
         height={561}
       />
       <Image
         className="brand-wordmark"
-        src="/logo/gitcastText.png"
+        src={sitePath("/logo/gitcastText.png")}
         alt={title}
         width={453}
         height={105}

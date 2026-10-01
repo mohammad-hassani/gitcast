@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { LocaleDate } from "@/components/LocaleDate";
 import { LocaleText } from "@/components/LocaleProvider";
+import { sitePath } from "@/lib/site-path";
 import podcast from "@/podcast.config";
 import {
   formatDuration,
@@ -134,7 +135,7 @@ export default function HomePage() {
                   <LocaleText id="home.explore" /> <ArrowIcon />
                 </a>
               )}
-              <a href="/feed.xml" className="button-quiet">
+              <a href={sitePath("/feed.xml")} className="button-quiet">
                 <LocaleText id="home.subscribe" />
               </a>
             </div>
@@ -270,7 +271,7 @@ export default function HomePage() {
             <LocaleText id="home.closing.description" />
           </p>
         </div>
-        <a href="/feed.xml" className="button-primary self-start sm:self-auto">
+        <a href={sitePath("/feed.xml")} className="button-primary self-start sm:self-auto">
           <span className="button-icon">
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="size-4">
               <path

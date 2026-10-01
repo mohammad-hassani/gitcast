@@ -11,6 +11,19 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Publish with GitHub Pages
+
+The `Deploy GitHub Pages` workflow builds and publishes the static site when changes are pushed to `main` or when you push a Git tag named `episode` or starting with `episode` (for example, `episode3`). It uses the `/gitcast` project-site path and publishes to [https://mohammad-hassani.github.io/gitcast/](https://mohammad-hassani.github.io/gitcast/).
+
+In the GitHub repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. After pushing a tagged episode, check the **Actions** tab for the deployment status. Use a unique tag for each episode (for example, `episode3`); Git tag names are unique, so the same `episode` tag cannot be reused for every release. Create and push a tag with:
+
+```bash
+git tag episode3
+git push origin episode3
+```
+
+The workflow can also be started manually with **Actions → Deploy GitHub Pages → Run workflow**.
+
 ## Add a new episode
 
 1. Record and edit the episode, then upload the audio to a public host. Copy its direct public audio URL; the episode wizard does not upload audio.
