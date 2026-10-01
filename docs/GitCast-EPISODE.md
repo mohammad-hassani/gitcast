@@ -14,6 +14,14 @@ content/episodes/012/
 
 `episode.md` contains YAML frontmatter followed by Markdown content. Audio is hosted outside Git, in Cloudflare R2.
 
+To create an episode without manually making a directory or writing frontmatter, run this in the repository:
+
+```bash
+npm run podcast -- new
+```
+
+The wizard chooses the next unused ID, validates each answer, previews the episode, and writes files only after confirmation. Provide a public audio URL and duration (`MM:SS`, `HH:MM:SS`, or seconds). A local cover image is optional and copied into the episode directory. The wizard creates a show-notes template in the Markdown file; edit that section before publishing.
+
 ## 2. Required Frontmatter
 
 ```yaml

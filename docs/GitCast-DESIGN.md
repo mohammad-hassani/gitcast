@@ -1,6 +1,6 @@
 # GitCast — Design System
 
-> Visual direction: **Cinematic / Storytelling podcast platform**, inspired by the selected "Story Scape" reference.
+> Visual direction: **Cinematic / Storytelling podcast platform** with an editorial audio identity, deep indigo surfaces, and a restrained warm-coral accent.
 >
 > This document is the visual source of truth for the GitCast frontend. Use it together with the reference screenshots supplied to the coding agent. Do not copy proprietary artwork, logos, or exact text from the reference; reproduce the visual language and interaction patterns as an original GitCast design.
 
@@ -59,11 +59,13 @@ The primary experience is dark mode.
 
 A light theme may exist, but it should preserve the same editorial character rather than becoming a generic white website.
 
-### 2.5 RTL first
+### 2.5 English and Persian
 
-GitCast is Persian-first.
+The site defaults to English and provides a persistent English/Persian language switch. The selected language sets the document language and direction (`en`/LTR or `fa`/RTL).
 
-The entire layout must work naturally in RTL:
+Persian episode titles and prose remain in their authored language in either interface locale. Mark those content regions as Persian/RTL while the surrounding interface follows the selected locale.
+
+The entire layout must work naturally in both directions:
 
 - navigation
 - episode metadata
@@ -99,22 +101,22 @@ Use CSS variables.
 
 ```css
 :root {
-  --background: #0A0A0C;
-  --background-elevated: #101014;
-  --background-soft: #15151A;
+  --background: #0C0C18;
+  --background-elevated: #121221;
+  --background-soft: #18182A;
 
-  --surface: #18181E;
-  --surface-hover: #202027;
+  --surface: #151525;
+  --surface-hover: #202035;
 
-  --foreground: #F4F1EA;
-  --foreground-muted: #B4B0A8;
-  --foreground-subtle: #77736C;
+  --foreground: #F5F3F0;
+  --foreground-muted: #B4B2C3;
+  --foreground-subtle: #88869C;
 
-  --border: rgba(244, 241, 234, 0.12);
-  --border-strong: rgba(244, 241, 234, 0.20);
+  --border: rgba(235, 232, 255, 0.13);
+  --border-strong: rgba(235, 232, 255, 0.24);
 
-  --accent: #D9FF6A;
-  --accent-soft: rgba(217, 255, 106, 0.14);
+  --accent: #FF874C;
+  --accent-soft: rgba(255, 135, 76, 0.14);
 
   --success: #A8E063;
   --danger: #FF6B6B;
@@ -143,6 +145,7 @@ Preferred font stack:
 
 ```css
 font-family:
+  "IRANYekan",
   "Vazirmatn",
   "IRANSansX",
   "Inter",
@@ -150,7 +153,7 @@ font-family:
   sans-serif;
 ```
 
-If the project chooses another Persian font, it must support Persian glyphs, Latin characters, numerals, and readable weights.
+The project bundles its IRANYekan variable webfont locally and uses it as the primary typeface. Keep Latin text, Persian text, numerals, and all readable weights supported by the font stack.
 
 ## Type scale
 
@@ -277,7 +280,7 @@ Recommended radial glow:
 background:
   radial-gradient(
     circle at 70% 20%,
-    rgba(217, 255, 106, 0.08),
+    rgba(255, 135, 76, 0.08),
     transparent 35%
   ),
   var(--background);
@@ -353,6 +356,8 @@ Example:
 The hero must immediately communicate what the podcast is, what the latest episode is, and how to listen.
 
 On desktop, artwork can occupy roughly 35–45% of the hero and text the remaining space. On mobile, stack deliberately rather than merely shrinking.
+
+Use restrained entrance and artwork motion to add depth. All motion must respect `prefers-reduced-motion`; avoid continuous movement outside the hero artwork and audio waveform.
 
 ---
 

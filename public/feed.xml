@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>GitCast</title>
+    <link>https://gitcast.example.com</link>
+    <description>پادکست گیت‌کست درباره‌ی فناوری، داستان‌گویی، و مسیر ساختن چیزهای مهم در عصر هوش مصنوعی.</description>
+    <language>fa-IR</language>
+    <itunes:image href="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" />
+    <itunes:author>GitCast</itunes:author>
+    <itunes:category text="Technology" />
+    <itunes:explicit>no</itunes:explicit>
+    <item>
+        <title>ساختن محصولی که از یک ابزار عبور می‌کند</title>
+        <description>در این قسمت درباره‌ی این‌که یک محصول چگونه از «ابزار» به «تجربه» تبدیل می‌شود و چرا سهولت، اعتماد و حسِ اینکه چیزی برای انسان ساخته شده، مهم‌تر از قابلیت‌های فنی است.</description>
+        <link>https://gitcast.example.com/episodes/building-beyond-a-tool</link>
+        <guid isPermaLink="true">https://gitcast.example.com/episodes/building-beyond-a-tool</guid>
+        <pubDate>Thu, 15 Oct 2026 00:00:00 GMT</pubDate>
+        <enclosure url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg" length="0" />
+        <itunes:duration>2781</itunes:duration>
+        <itunes:explicit>no</itunes:explicit>
+      </item><item>
+        <title>چرا هنوز داستان می‌سازیم؟</title>
+        <description>در این اپیزود درباره‌ی نقش داستان در عصر دیجیتال و اینکه چرا ابزارهای جدید، ارتباط انسانی را نمی‌سازند بلکه آن را تقویت می‌کنند، صحبت می‌کنیم.</description>
+        <link>https://gitcast.example.com/episodes/why-we-still-tell-stories</link>
+        <guid isPermaLink="true">https://gitcast.example.com/episodes/why-we-still-tell-stories</guid>
+        <pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate>
+        <enclosure url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" length="0" />
+        <itunes:duration>2301</itunes:duration>
+        <itunes:explicit>no</itunes:explicit>
+      </item>
+  </channel>
+</rss>

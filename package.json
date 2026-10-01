@@ -2,16 +2,21 @@
   "name": "podcast",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run generate:rss && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "podcast": "node --experimental-strip-types scripts/gitcast-cli.ts",
+    "generate:rss": "node --experimental-strip-types scripts/generate-rss.ts"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "next": "16.3.8",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

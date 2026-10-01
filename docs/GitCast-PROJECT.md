@@ -314,9 +314,9 @@ GitCast — New Episode
 ? Episode title:
 ? Short description:
 ? Publication date:
-? Audio file:
+? Public audio URL:
 ? Cover image:
-? Duration:
+? Duration (MM:SS or seconds):
 ? Tags:
 ```
 
@@ -363,6 +363,14 @@ gitcast new
 ```
 
 Creates an episode interactively.
+
+The wizard assigns the next unused numeric ID and reviews all entered metadata before it writes files. It accepts a hosted HTTP(S) audio URL and a duration, plus an optional cover image path or URL. A local cover is copied into the new episode directory. After confirmation, it writes `episode.md` with a ready-to-edit show-notes template.
+
+```bash
+npm run podcast -- new
+```
+
+When prompted for a local cover file, use its full path or `~/` path. Audio must already be publicly hosted; the CLI does not upload audio to R2.
 
 ### Validate
 

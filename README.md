@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitCast
 
-## Getting Started
+GitCast is a podcast website with episodes stored as Markdown files and an automatically generated RSS feed.
 
-First, run the development server:
+## Run the website locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Add a new episode
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Record and edit the episode, then upload the audio to a public host. Copy its direct public audio URL; the episode wizard does not upload audio.
+2. From the project folder, start the guided wizard:
 
-## Learn More
+   ```bash
+   npm run podcast -- new
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. Answer the prompts for the episode title, English URL slug, short description, publication date, public audio URL, duration, optional cover image, and tags. Duration can be entered as `MM:SS`, `HH:MM:SS`, or seconds.
+4. Review the summary and confirm to create the episode. The wizard assigns the next available episode number and creates `content/episodes/<number>/episode.md`.
+5. Open the generated `episode.md` and replace the show-notes placeholder with the episode notes. Include useful links or chapter headings as needed.
+6. Validate the episode and build the site:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   npm run podcast -- validate
+   npm run build
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+7. Publish using the project's normal deployment process. Make sure the audio URL is publicly accessible so podcast apps can play it.
 
-## Deploy on Vercel
+The wizard requires an interactive terminal and will not create files until you confirm. For the episode format and field requirements, see [docs/GitCast-EPISODE.md](docs/GitCast-EPISODE.md).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Edit website text or add a language
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Website interface copy and translations are centralized in [`content/i18n/translations.ts`](content/i18n/translations.ts). Edit the English (`en`) and Persian (`fa`) message values there to change the navigation, buttons, accessibility labels, player text, and page copy. Episode titles, descriptions, and show notes are episode content, so edit those in the relevant `content/episodes/<number>/episode.md` instead.
+
+To add another interface language, add a new entry to `translations` in that same file. Copy every message key from the English messages, translate its value, and set the language's `nativeName`, short switcher label (`shortName`), `intlLocale` (for dates), and text `direction` (`ltr` or `rtl`). The language switcher cycles through the configured entries automatically. Set `defaultLocale` in the same file if you want the new language to be the first-time default.
