@@ -5,8 +5,9 @@ import ReactMarkdown from "react-markdown";
 import { PodcastPlayer } from "@/components/PodcastPlayer";
 import { LocaleDate } from "@/components/LocaleDate";
 import { LocaleText } from "@/components/LocaleProvider";
-import { formatDuration, getAllEpisodes, getEpisodeBySlug } from "@/lib/content";
+import { formatDuration, getAllEpisodes, getEpisodeBySlug, getEpisodeCoverSource } from "@/lib/content";
 import podcast from "@/podcast.config";
+import { sitePath } from "@/lib/site-path";
 
 export function generateStaticParams() {
   return getAllEpisodes().map((episode) => ({ slug: episode.slug }));
@@ -24,10 +25,10 @@ export default async function EpisodePage({
     notFound();
   }
 
-  const cover = episode.cover ?? podcast.artwork;
+  const cover = getEpisodeCoverSource(episode) ?? sitePath(podcast.artwork);
 
   return (
-    <main className="mx-auto w-full max-w-[1480px] px-5 pb-24 pt-8 sm:px-8 lg:px-12">
+    <main className="mx-auto w-full max-w-370 px-5 pb-24 pt-8 sm:px-8 lg:px-12">
       <div className="mb-8 flex items-center justify-between gap-4">
         <Link href="/#episodes" className="inline-flex items-center gap-2 text-sm text-foreground-muted transition-colors hover:text-foreground">
           <span aria-hidden="true">←</span>
@@ -38,8 +39,8 @@ export default async function EpisodePage({
         </span>
       </div>
 
-      <section className="overflow-hidden rounded-[2rem] border border-border bg-background-elevated">
-        <div className="grid lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
+      <section className="overflow-hidden rounded-4xl border border-border bg-background-elevated">
+        <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
           <div className="detail-artwork relative aspect-square lg:aspect-auto">
             <Image
               src={cover}
@@ -50,12 +51,12 @@ export default async function EpisodePage({
               sizes="(max-width: 1024px) 100vw, 45vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
-            <span className="absolute inset-inline-start-6 inset-block-end-5 text-sm text-white/80">
+            <div className="absolute inset-0 bg-linear-to-t from-black/55 via-transparent to-transparent" />
+            <span dir="ltr" className="detail-artwork-label">
               G / {episode.id}
             </span>
           </div>
-          <div className="p-6 sm:p-9 lg:p-12">
+          <div className="min-w-0 p-4 sm:p-9 lg:p-12">
             <p className="eyebrow text-foreground-subtle"><LocaleText id="episode.number" values={{ id: episode.id }} /></p>
             <div className="mt-5 flex flex-wrap gap-2 text-xs text-foreground-muted">
               <LocaleDate date={episode.date} />

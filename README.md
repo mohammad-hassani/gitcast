@@ -38,17 +38,18 @@ If a deployment was rejected by the environment policy, update the allowed branc
    npm run podcast -- new
    ```
 
-3. Answer the prompts for the episode title, English URL slug, short description, publication date, public audio URL, duration, optional cover image, and tags. Duration can be entered as `MM:SS`, `HH:MM:SS`, or seconds.
-4. Review the summary and confirm to create the episode. The wizard assigns the next available episode number and creates `content/episodes/<number>/episode.md`.
-5. Open the generated `episode.md` and replace the show-notes placeholder with the episode notes. Include useful links or chapter headings as needed.
-6. Validate the episode and build the site:
+3. Answer the prompts for the episode title, English URL slug, short description, publication date, public audio URL, duration, and tags. Duration can be entered as `MM:SS`, `HH:MM:SS`, or seconds.
+4. Review the summary and confirm to create the episode. The wizard assigns the next available episode number and creates `content/episodes/<number>/episode.md`, with a cover reference to `content/cover/episode<number>.jpg`.
+5. Add the episode artwork as a JPEG at the path shown by the wizard (for example, `content/cover/episode003.jpg`). The build syncs it to the public `/cover/` route automatically.
+6. Open the generated `episode.md` and replace the show-notes placeholder with the episode notes. Include useful links or chapter headings as needed.
+7. Validate the episode and build the site:
 
    ```bash
    npm run podcast -- validate
    npm run build
    ```
 
-7. Publish using the project's normal deployment process. Make sure the audio URL is publicly accessible so podcast apps can play it.
+8. Publish using the project's normal deployment process. Make sure the audio URL is publicly accessible so podcast apps can play it.
 
 The wizard requires an interactive terminal and will not create files until you confirm. For the episode format and field requirements, see [docs/GitCast-EPISODE.md](docs/GitCast-EPISODE.md).
 

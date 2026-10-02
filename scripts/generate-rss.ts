@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import podcast from "../podcast.config.ts";
 import { getAllEpisodes } from "../lib/content.ts";
+import { episodeCoverReference } from "../lib/episode-cover.ts";
 
 const outputPaths = [
   path.join(process.cwd(), "public", "feed.xml"),
@@ -18,13 +19,34 @@ function escapeXml(value: string) {
     .replace(/'/g, "&apos;");
 }
 
+function publicAssetUrl(assetPath: string) {
+  if (/^https?:\/\//i.test(assetPath)) {
+    return assetPath;
+  }
+  const site = new URL(podcast.websiteUrl);
+  const basePath = site.pathname.replace(/\/+$/, "");
+  return new URL(`${basePath}/${assetPath.replace(/^\/+/, "")}`, site.origin).toString();
+}
+
+const channelArtwork = publicAssetUrl(podcast.artwork);
+
 const items = episodes
   .map((episode) => {
     const episodeUrl = `${podcast.websiteUrl}/episodes/${episode.slug}/`;
+    const episodeArtwork = !episode.cover
+      ? channelArtwork
+      : /^https?:\/\//i.test(episode.cover)
+        ? episode.cover
+        : publicAssetUrl(
+          episode.cover === episodeCoverReference(episode.id)
+            ? `/cover/episode${episode.id}.jpg`
+            : episode.cover,
+        );
     return `
       <item>
         <title>${escapeXml(episode.title)}</title>
         <description>${escapeXml(episode.description)}</description>
+        <itunes:image href="${escapeXml(episodeArtwork)}" />
         <link>${escapeXml(episodeUrl)}</link>
         <guid isPermaLink="true">${escapeXml(episodeUrl)}</guid>
         <pubDate>${new Date(episode.date).toUTCString()}</pubDate>
@@ -42,7 +64,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>
     <link>${escapeXml(podcast.websiteUrl)}</link>
     <description>${escapeXml(podcast.description)}</description>
     <language>${escapeXml(podcast.language)}</language>
-    <itunes:image href="${escapeXml(podcast.artwork)}" />
+    <itunes:image href="${escapeXml(channelArtwork)}" />
     <itunes:author>${escapeXml(podcast.author)}</itunes:author>
     <itunes:category text="${escapeXml(podcast.category)}" />
     <itunes:explicit>${podcast.explicit ? "yes" : "no"}</itunes:explicit>

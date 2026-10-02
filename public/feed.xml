@@ -5,13 +5,14 @@
     <link>https://mohammad-hassani.github.io/gitcast</link>
     <description>پادکست گیت‌کست درباره‌ی فناوری، داستان‌گویی، و مسیر ساختن چیزهای مهم در عصر هوش مصنوعی.</description>
     <language>fa-IR</language>
-    <itunes:image href="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" />
+    <itunes:image href="https://mohammad-hassani.github.io/gitcast/logo/logo-bg.jpg" />
     <itunes:author>GitCast</itunes:author>
     <itunes:category text="Technology" />
     <itunes:explicit>no</itunes:explicit>
     <item>
         <title>ساختن محصولی که از یک ابزار عبور می‌کند</title>
         <description>در این قسمت درباره‌ی این‌که یک محصول چگونه از «ابزار» به «تجربه» تبدیل می‌شود و چرا سهولت، اعتماد و حسِ اینکه چیزی برای انسان ساخته شده، مهم‌تر از قابلیت‌های فنی است.</description>
+        <itunes:image href="https://mohammad-hassani.github.io/gitcast/cover/episode002.jpg" />
         <link>https://mohammad-hassani.github.io/gitcast/episodes/building-beyond-a-tool/</link>
         <guid isPermaLink="true">https://mohammad-hassani.github.io/gitcast/episodes/building-beyond-a-tool/</guid>
         <pubDate>Thu, 15 Oct 2026 00:00:00 GMT</pubDate>
@@ -21,6 +22,7 @@
       </item><item>
         <title>چرا هنوز داستان می‌سازیم؟</title>
         <description>در این اپیزود درباره‌ی نقش داستان در عصر دیجیتال و اینکه چرا ابزارهای جدید، ارتباط انسانی را نمی‌سازند بلکه آن را تقویت می‌کنند، صحبت می‌کنیم.</description>
+        <itunes:image href="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" />
         <link>https://mohammad-hassani.github.io/gitcast/episodes/why-we-still-tell-stories/</link>
         <guid isPermaLink="true">https://mohammad-hassani.github.io/gitcast/episodes/why-we-still-tell-stories/</guid>
         <pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate>

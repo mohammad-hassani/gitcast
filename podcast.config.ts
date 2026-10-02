@@ -6,8 +6,7 @@ export const podcast = {
   language: "fa-IR",
   websiteUrl: "https://mohammad-hassani.github.io/gitcast",
   feedUrl: "https://mohammad-hassani.github.io/gitcast/feed.xml",
-  artwork:
-    "./public/logo/logo-bg.jpg",
+  artwork: "/logo/logo-bg.jpg",
   category: "Technology",
   explicit: false,
   audio: {

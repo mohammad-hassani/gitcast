@@ -3,9 +3,11 @@ import path from "node:path";
 import readline from "node:readline";
 import podcast from "../podcast.config.ts";
 import { getAllEpisodes, getEpisodeBySlug } from "../lib/content.ts";
+import { episodeCoverReference, isJpegImage } from "../lib/episode-cover.ts";
 
 const rootDir = process.cwd();
 const episodesDir = path.join(rootDir, "content", "episodes");
+const coversDir = path.join(rootDir, "content", "cover");
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
 type NewEpisode = {
@@ -16,8 +18,7 @@ type NewEpisode = {
   date: string;
   duration: number;
   audio: string;
-  cover?: string;
-  localCover?: string;
+  cover: string;
   tags: string[];
 };
 
@@ -65,13 +66,6 @@ function formatDuration(seconds: number) {
   return hours > 0
     ? `${hours}:${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`
     : `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
-}
-
-function expandPath(filePath: string) {
-  const expanded = filePath.startsWith("~/")
-    ? path.join(process.env.HOME ?? "", filePath.slice(2))
-    : filePath;
-  return path.resolve(rootDir, expanded);
 }
 
 function nextEpisodeId() {
@@ -140,33 +134,6 @@ async function createEpisode() {
     throw new Error("Episode duration could not be read.");
   }
 
-  const coverInput = await prompt("Cover image path or public image URL (optional)");
-  let cover: string | undefined;
-  let localCover: string | undefined;
-  if (coverInput) {
-    try {
-      const coverUrl = new URL(coverInput);
-      if (coverUrl.protocol !== "https:" && coverUrl.protocol !== "http:") {
-        throw new Error("Cover URLs must use HTTP or HTTPS.");
-      }
-      cover = coverUrl.toString();
-    } catch (error) {
-      if (error instanceof TypeError) {
-        localCover = expandPath(coverInput);
-        if (!fs.existsSync(localCover) || !fs.statSync(localCover).isFile()) {
-          throw new Error(`Cover image not found: ${localCover}`);
-        }
-        const extension = path.extname(localCover).toLowerCase();
-        if (![".jpg", ".jpeg", ".png", ".webp", ".avif"].includes(extension)) {
-          throw new Error("Cover image must be JPG, PNG, WebP, or AVIF.");
-        }
-        cover = `./cover${extension}`;
-      } else {
-        throw error;
-      }
-    }
-  }
-
   const tagsInput = await prompt("Tags (comma-separated, optional)");
   const tags = [...new Set(tagsInput.split(",").map((tag) => tag.trim().toLowerCase()).filter(Boolean))];
 
@@ -178,8 +145,7 @@ async function createEpisode() {
     date,
     duration,
     audio,
-    cover,
-    localCover,
+    cover: episodeCoverReference(id),
     tags,
   };
 
@@ -193,7 +159,7 @@ async function createEpisode() {
   console.log(`Date:        ${episode.date}`);
   console.log(`Audio:       ${episode.audio}`);
   console.log(`Duration:    ${formatDuration(episode.duration)}`);
-  console.log(`Cover:       ${episode.cover ?? "Podcast default artwork"}`);
+  console.log(`Cover:       content/cover/episode${episode.id}.jpg`);
   console.log(`Tags:        ${episode.tags.length ? episode.tags.join(", ") : "None"}`);
   console.log("────────────────────────────────────────\n");
 
@@ -210,14 +176,12 @@ async function createEpisode() {
 
   fs.mkdirSync(directory, { recursive: true });
   try {
-    if (episode.localCover && episode.cover) {
-      fs.copyFileSync(episode.localCover, path.join(directory, path.basename(episode.cover)));
-    }
+    fs.mkdirSync(coversDir, { recursive: true });
 
     const tagsFrontmatter = episode.tags.length
       ? `tags:\n${episode.tags.map((tag) => `  - ${JSON.stringify(tag)}`).join("\n")}\n`
       : "";
-    const coverFrontmatter = episode.cover ? `cover: ${JSON.stringify(episode.cover)}\n` : "";
+    const coverFrontmatter = `cover: ${JSON.stringify(episode.cover)}\n`;
     const markdown = `---
 id: ${JSON.stringify(episode.id)}
 title: ${JSON.stringify(episode.title)}
@@ -243,7 +207,8 @@ Add the show notes for this episode here.
   }
 
   console.log(`Created ${path.relative(rootDir, path.join(directory, "episode.md"))}`);
-  console.log("Next: add your show notes, run `npm run podcast -- validate`, then `npm run build`.");
+  console.log(`Next: add a JPG cover at ${path.relative(rootDir, path.join(coversDir, `episode${episode.id}.jpg`))}.`);
+  console.log("Then add your show notes, run `npm run podcast -- validate`, and build the site.");
 }
 
 function listEpisodes() {
@@ -274,6 +239,19 @@ function validate() {
     }
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(episode.slug)) {
       throw new Error(`Invalid slug: ${episode.slug}`);
+    }
+    if (episode.cover?.startsWith("../cover/")) {
+      const expectedReference = episodeCoverReference(episode.id);
+      if (episode.cover !== expectedReference) {
+        throw new Error(`Invalid cover path for episode ${episode.id}. Use "${expectedReference}".`);
+      }
+      const coverPath = path.join(coversDir, `episode${episode.id}.jpg`);
+      if (!fs.existsSync(coverPath) || !fs.statSync(coverPath).isFile()) {
+        throw new Error(`Cover not found: ${path.relative(rootDir, coverPath)}. Add a JPG image at this path.`);
+      }
+      if (!isJpegImage(coverPath)) {
+        throw new Error(`Cover must be a JPEG image: ${path.relative(rootDir, coverPath)}`);
+      }
     }
     if (Number.isNaN(Date.parse(episode.date)) || !Number.isInteger(episode.duration) || episode.duration <= 0) {
       throw new Error(`Invalid date or duration: ${episode.id}`);

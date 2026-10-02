@@ -6,7 +6,7 @@ description: "در این قسمت درباره‌ی این‌که یک محصو
 date: "2026-10-15"
 duration: 2781
 audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-cover: "/logo/logo-bg.jpg"
+cover: "../cover/episode002.jpg"
 tags:
   - product
   - design

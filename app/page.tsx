@@ -6,6 +6,7 @@ import { LocaleText } from "@/components/LocaleProvider";
 import { sitePath } from "@/lib/site-path";
 import podcast from "@/podcast.config";
 import {
+  getEpisodeCoverSource,
   formatDuration,
   getAllEpisodes,
   getLatestEpisode,
@@ -52,7 +53,7 @@ function Waveform() {
 export default function HomePage() {
   const episodes = getAllEpisodes();
   const latestEpisode = getLatestEpisode();
-  const heroArtwork = latestEpisode?.cover ?? podcast.artwork;
+  const heroArtwork = (latestEpisode && getEpisodeCoverSource(latestEpisode)) ?? sitePath(podcast.artwork);
 
   return (
     <main className="mx-auto w-full max-w-370 px-5 pb-24 pt-5 sm:px-8 lg:px-12">
@@ -222,7 +223,7 @@ export default function HomePage() {
                   >
                     <div className="episode-row-art relative aspect-square overflow-hidden">
                       <Image
-                        src={episode.cover ?? podcast.artwork}
+                        src={getEpisodeCoverSource(episode) ?? sitePath(podcast.artwork)}
                         alt=""
                         fill
                         unoptimized

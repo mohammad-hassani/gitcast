@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "npm run generate:rss && next build",
+    "dev": "npm run sync:covers && next dev",
+    "build": "npm run generate:rss && npm run sync:covers && next build",
     "start": "next start",
     "lint": "eslint",
     "podcast": "node --experimental-strip-types scripts/gitcast-cli.ts",
-    "generate:rss": "node --experimental-strip-types scripts/generate-rss.ts"
+    "generate:rss": "node --experimental-strip-types scripts/generate-rss.ts",
+    "sync:covers": "node --experimental-strip-types scripts/sync-covers.ts"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

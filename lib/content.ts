@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { sitePath } from "./site-path.ts";
+import { episodeCoverReference } from "./episode-cover.ts";
 
 export type Episode = {
   id: string;
@@ -68,6 +70,20 @@ export function getAllEpisodes(): Episode[] {
 
 export function getEpisodeBySlug(slug: string) {
   return getAllEpisodes().find((episode) => episode.slug === slug);
+}
+
+export function getEpisodeCoverSource(episode: Pick<Episode, "id" | "cover">) {
+  if (!episode.cover) {
+    return undefined;
+  }
+
+  if (episode.cover === episodeCoverReference(episode.id)) {
+    return sitePath(`/cover/episode${episode.id}.jpg`);
+  }
+
+  return episode.cover.startsWith("/")
+    ? sitePath(episode.cover)
+    : episode.cover;
 }
 
 export function formatDuration(totalSeconds: number) {

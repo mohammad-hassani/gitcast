@@ -207,13 +207,14 @@ GitCast/
 ├── README.md
 │
 ├── content/
+│   ├── cover/
+│   │   ├── episode001.jpg
+│   │   └── episode002.jpg
 │   └── episodes/
 │       ├── 001/
-│       │   ├── episode.md
-│       │   └── cover.webp
+│       │   └── episode.md
 │       ├── 002/
-│       │   ├── episode.md
-│       │   └── cover.webp
+│       │   └── episode.md
 │       └── ...
 │
 ├── apps/
@@ -274,8 +275,10 @@ Each episode lives in its own directory:
 
 ```text
 content/episodes/012/
-├── episode.md
-└── cover.webp
+└── episode.md
+
+content/cover/
+└── episode012.jpg
 ```
 
 The Markdown file contains metadata and episode content.
@@ -364,13 +367,13 @@ gitcast new
 
 Creates an episode interactively.
 
-The wizard assigns the next unused numeric ID and reviews all entered metadata before it writes files. It accepts a hosted HTTP(S) audio URL and a duration, plus an optional cover image path or URL. A local cover is copied into the new episode directory. After confirmation, it writes `episode.md` with a ready-to-edit show-notes template.
+The wizard assigns the next unused numeric ID and reviews all entered metadata before it writes files. It accepts a hosted HTTP(S) audio URL and a duration. After confirmation, it writes `episode.md` with a cover reference to `../cover/episode<ID>.jpg` and a ready-to-edit show-notes template. Add the JPEG artwork to `content/cover/episode<ID>.jpg`.
 
 ```bash
 npm run podcast -- new
 ```
 
-When prompted for a local cover file, use its full path or `~/` path. Audio must already be publicly hosted; the CLI does not upload audio to R2.
+The cover directory is the source of truth; dev and build commands sync its JPEG files to the public route. Audio must already be publicly hosted; the CLI does not upload audio to R2.
 
 ### Validate
 

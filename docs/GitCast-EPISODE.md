@@ -8,8 +8,10 @@ Each episode lives in its own directory:
 
 ```text
 content/episodes/012/
-├── episode.md
-└── cover.webp
+└── episode.md
+
+content/cover/
+└── episode012.jpg
 ```
 
 `episode.md` contains YAML frontmatter followed by Markdown content. Audio is hosted outside Git, in Cloudflare R2.
@@ -20,7 +22,7 @@ To create an episode without manually making a directory or writing frontmatter,
 npm run podcast -- new
 ```
 
-The wizard chooses the next unused ID, validates each answer, previews the episode, and writes files only after confirmation. Provide a public audio URL and duration (`MM:SS`, `HH:MM:SS`, or seconds). A local cover image is optional and copied into the episode directory. The wizard creates a show-notes template in the Markdown file; edit that section before publishing.
+The wizard chooses the next unused ID, validates each answer, previews the episode, and writes files only after confirmation. Provide a public audio URL and duration (`MM:SS`, `HH:MM:SS`, or seconds). It writes a cover reference to `../cover/episode<ID>.jpg` and ensures the shared `content/cover/` directory exists. Add the episode image there as a JPEG before validating or building. The wizard creates a show-notes template in the Markdown file; edit that section before publishing.
 
 ## 2. Required Frontmatter
 
@@ -52,7 +54,7 @@ Optional fields:
 
 | Field | Type | Example |
 |---|---|---|
-| `cover` | string | `"./cover.webp"` |
+| `cover` | string | `"../cover/episode012.jpg"` |
 | `tags` | string[] | `["technology", "ai"]` |
 | `season` | integer | `1` |
 | `episode` | integer | `12` |
@@ -135,13 +137,13 @@ The storage layer generates the public URL.
 
 ### `cover`
 
-Optional path relative to the episode directory:
+Path relative to the episode directory:
 
 ```yaml
-cover: "./cover.webp"
+cover: "../cover/episode012.jpg"
 ```
 
-If omitted, the global podcast artwork is used.
+The referenced JPEG belongs in `content/cover/episode012.jpg`. The dev and build scripts copy referenced covers into `public/cover/` so they work with the static export and GitHub Pages base path. Cover filenames must use `episode<ID>.jpg`, and the file must be a JPEG image.
 
 ### `tags`
 
@@ -220,7 +222,7 @@ must contain:
 id: "012"
 ```
 
-If `cover` is declared, the referenced file must exist.
+If `cover` uses the shared `../cover/episode<ID>.jpg` format, the matching JPEG must exist in `content/cover/`.
 
 ## 6. Ordering
 
@@ -289,7 +291,7 @@ Audio:
 episodes/012/audio.mp3
 
 Cover:
-./cover.webp
+../cover/episode012.jpg
 
 Tags:
 technology, story, ai
@@ -374,8 +376,10 @@ Directory:
 
 ```text
 content/episodes/012/
-├── episode.md
-└── cover.webp
+└── episode.md
+
+content/cover/
+└── episode012.jpg
 ```
 
 `episode.md`:
@@ -389,7 +393,7 @@ description: "در این اپیزود درباره داستان، تکنولو�
 date: "2026-10-01"
 duration: 2301
 audio: "episodes/012/audio.mp3"
-cover: "./cover.webp"
+cover: "../cover/episode012.jpg"
 tags:
   - technology
   - story
