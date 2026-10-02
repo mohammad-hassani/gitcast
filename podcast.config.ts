@@ -7,7 +7,7 @@ export const podcast = {
   websiteUrl: "https://mohammad-hassani.github.io/gitcast",
   feedUrl: "https://mohammad-hassani.github.io/gitcast/feed.xml",
   artwork:
-    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80",
+    "./public/logo/logo-bg.jpg",
   category: "Technology",
   explicit: false,
   audio: {

@@ -55,8 +55,8 @@ export default function HomePage() {
   const heroArtwork = latestEpisode?.cover ?? podcast.artwork;
 
   return (
-    <main className="mx-auto w-full max-w-[1480px] px-5 pb-24 pt-5 sm:px-8 lg:px-12">
-      <section className="hero-shell relative isolate overflow-hidden rounded-[2rem] border border-border sm:rounded-[2.5rem]">
+    <main className="mx-auto w-full max-w-370 px-5 pb-24 pt-5 sm:px-8 lg:px-12">
+      <section className="hero-shell relative isolate overflow-hidden rounded-4xl border border-border sm:rounded-[2.5rem]">
         <div className="hero-image absolute inset-0 -z-20">
           <Image
             src={heroArtwork}
@@ -70,7 +70,7 @@ export default function HomePage() {
         </div>
         <div className="hero-scrim absolute inset-0 -z-10" />
 
-        <div className="hero-content grid min-h-[600px] items-end gap-12 p-6 sm:min-h-[680px] sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-center lg:p-16">
+        <div className="hero-content grid min-h-150 items-end gap-12 p-6 sm:min-h-170 sm:p-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] lg:items-center lg:p-16">
           <div className="max-w-3xl">
             <p className="eyebrow hero-enter">
               <span className="eyebrow-dot" />
@@ -144,7 +144,7 @@ export default function HomePage() {
           {latestEpisode && (
             <Link
               href={`/episodes/${latestEpisode.slug}`}
-              className="featured-artwork group relative mx-auto aspect-square w-full max-w-[230px] overflow-hidden rounded-2xl border border-white/20 shadow-2xl shadow-black/50 sm:max-w-[300px] lg:mx-0 lg:max-w-[340px]"
+              className="featured-artwork group relative mx-auto aspect-square w-full max-w-57.5 overflow-hidden rounded-2xl border border-white/20 shadow-2xl shadow-black/50 sm:max-w-75 lg:mx-0 lg:max-w-85"
               aria-label={latestEpisode.title}
             >
               <Image
@@ -261,7 +261,7 @@ export default function HomePage() {
         )}
       </section>
 
-      <section className="closing-note reveal-up mt-20 flex flex-col gap-6 rounded-[2rem] border border-border bg-surface p-7 sm:mt-28 sm:flex-row sm:items-center sm:justify-between sm:p-10">
+      <section className="closing-note reveal-up mt-20 flex flex-col gap-6 rounded-4xl border border-border bg-surface p-7 sm:mt-28 sm:flex-row sm:items-center sm:justify-between sm:p-10">
         <div>
           <p className="eyebrow text-foreground-subtle"><LocaleText id="home.closing.eyebrow" /></p>
           <h2 className="mt-3 text-2xl font-medium text-foreground sm:text-3xl">
