@@ -208,52 +208,52 @@ export default function HomePage() {
         </div>
 
         {episodes.length > 0 ? (
-          <div className="episode-grid grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="episode-list">
             {episodes.map((episode, index) => (
-              <article
-                key={episode.slug}
-                className="episode-card group reveal-up"
-                style={{ "--card-index": index } as CSSProperties}
-              >
-                <Link
-                  href={`/episodes/${episode.slug}`}
-                  className="episode-card-link"
-                  aria-label={episode.title}
+              <li key={episode.slug}>
+                <article
+                  className="episode-row reveal-up"
+                  style={{ "--row-index": index } as CSSProperties}
                 >
-                  <div className="episode-artwork relative aspect-[1.28/1] overflow-hidden">
-                    <Image
-                      src={episode.cover ?? podcast.artwork}
-                      alt=""
-                      fill
-                      unoptimized
-                      sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]"
-                    />
-                    <span className="episode-number"><LocaleText id="home.episodes.number" values={{ id: episode.id }} /></span>
-                    <span className="episode-play" aria-hidden="true">
+                  <Link
+                    href={`/episodes/${episode.slug}`}
+                    className="episode-row-link group"
+                    aria-label={episode.title}
+                  >
+                    <div className="episode-row-art relative aspect-square overflow-hidden">
+                      <Image
+                        src={episode.cover ?? podcast.artwork}
+                        alt=""
+                        fill
+                        unoptimized
+                        sizes="(max-width: 640px) 64px, 88px"
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+                      />
+                    </div>
+                    <div className="episode-row-copy">
+                      <span className="episode-row-number">
+                        <LocaleText id="home.episodes.number" values={{ id: episode.id }} />
+                      </span>
+                      <h3 lang="fa" dir="rtl" className="episode-row-title">
+                        <bdi>{episode.title}</bdi>
+                      </h3>
+                      <p lang="fa" dir="rtl" className="episode-row-description">
+                        <bdi>{episode.description}</bdi>
+                      </p>
+                      <div className="episode-row-meta">
+                        <LocaleDate date={episode.date} />
+                        <span aria-hidden="true">·</span>
+                        <span>{formatDuration(episode.duration)}</span>
+                      </div>
+                    </div>
+                    <span className="episode-row-play" aria-hidden="true">
                       <PlayIcon />
                     </span>
-                  </div>
-                  <div className="p-5 sm:p-6">
-                    <div className="flex items-center justify-between gap-3 text-xs text-foreground-subtle">
-                      <LocaleDate date={episode.date} />
-                      <span>{formatDuration(episode.duration)}</span>
-                    </div>
-                    <h3 lang="fa" dir="rtl" className="mt-4 text-xl font-medium leading-relaxed text-foreground transition-colors group-hover:text-accent sm:text-2xl">
-                      <bdi>{episode.title}</bdi>
-                    </h3>
-                    <p lang="fa" dir="rtl" className="mt-2 line-clamp-2 text-sm leading-7 text-foreground-muted">
-                      <bdi>{episode.description}</bdi>
-                    </p>
-                    <span className="card-read-more mt-5 inline-flex items-center gap-2 text-sm text-foreground">
-                      <LocaleText id="home.episodes.listen" />
-                      <ArrowIcon />
-                    </span>
-                  </div>
-                </Link>
-              </article>
+                  </Link>
+                </article>
+              </li>
             ))}
-          </div>
+          </ul>
         ) : (
           <div className="rounded-2xl border border-dashed border-border px-6 py-16 text-center text-foreground-muted">
             <LocaleText id="home.episodes.empty" />
