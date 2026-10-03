@@ -2,7 +2,7 @@
 
 GitCast is a podcast website with episodes stored as Markdown files and an automatically generated RSS feed.
 
-demo: [http://hasani.id.ir/gitcast/](http://hasani.id.ir/gitcast/)
+demo: [http://gitcast.ir/](http://gitcast.ir/)
 
 ## Run the website locally
 
